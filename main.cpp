@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-
 class Book
 {
 public:
@@ -9,14 +8,11 @@ public:
     string genre;
     double price;
     bool availability;
-
-    // Default constructor
     Book() : title(""), author(""), genre(""), price(0.0), availability(false) {}
-
-    // Parameterized constructor
     Book(string t, string a, string g, double p, bool av) : title(t), author(a), genre(g), price(p), availability(av) {}
 };
-        int book_count = 0;
+
+int book_count = 0;
 
 class Node {
 public:
@@ -29,7 +25,6 @@ public:
 class BookStack {
 private:
     Node* top;
-
 public:
     BookStack() : top(nullptr) {}
 
@@ -46,7 +41,6 @@ public:
     Book pop() {
         if (isEmpty()) {
             std::cerr << "Error: Stack is empty." << std::endl;
-            exit(EXIT_FAILURE);
         }
 
         Node* temp = top;
