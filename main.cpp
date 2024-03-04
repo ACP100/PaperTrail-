@@ -40,7 +40,7 @@ public:
 
     Book pop() {
         if (isEmpty()) {
-            std::cerr << "Error: Stack is empty." << std::endl;
+            cout << "Error: Stack is empty." << endl;
         }
 
         Node* temp = top;
@@ -88,22 +88,21 @@ public:
         string title, author, genre;
         double price;
         bool availability;
+        getline(cin, title);
 
-        cout << "Enter the title of the book: ";
-        cin >> title;
-        cout << "Enter the author of the book: ";
-        cin >> author;
-        cout << "Enter the genre of the book: ";
-        cin >> genre;
-        cout << "Enter the price of the book: ";
+        cout << "Enter the title of the book: \n" ;
+        getline(cin, title);
+        cout << "Enter the author of the book: \n";
+        getline(cin, author);
+        cout << "Enter the genre of the book: \n";
+        getline(cin, genre);
+        cout << "Enter the price of the book: \n";
         cin >> price;
         cout << "Is the book available? (1 for Yes, 0 for No): ";
         cin >> availability;
 
-        if (availability != 1 || availability!= 0)
-        {
-            cout << "wrong" << endl;
-        }
+
+
 
         if (book_count < MAX_BOOKS)
         {
@@ -147,8 +146,9 @@ public:
         }
         else {
         string bookTitle;
+        getline(cin,bookTitle);
         cout << "Enter the title of the book to add to the order queue: ";
-        cin >> bookTitle;
+        getline(cin,bookTitle);
 
         Book* bookToAdd = searchBook(bookTitle);
         if (bookToAdd != nullptr)
@@ -222,8 +222,9 @@ public:
         }
         else {
         string genreChoice;
+        getline(cin ,  genreChoice );
         cout << "Enter a genre to view books from that genre: ";
-        cin >> genreChoice;
+        getline(cin ,  genreChoice );
         for (int i = 0; i < book_count; ++i)
         {
             if (book_list[i].genre == genreChoice)
@@ -240,8 +241,9 @@ public:
         }
         else {
         string bookToView;
+        getline(cin ,  bookToView);
         cout << "Enter the title of the book to view availability: ";
-        cin >> bookToView;
+        getline(cin ,  bookToView);
         Book* book = searchBook(bookToView);
         if (book != nullptr)
         {
@@ -279,19 +281,6 @@ public:
         }
     }
     }
-    void checkout()
-    {   processOrderQueue();
-        cout << "checking out" << endl;
-        double sum = 0 ;
-        for(int i=0 ; i< order_count ; i++)
-        {
-            sum = order_queue[i].price + sum ;
-
-        }
-        cout << "your total is " << sum << endl;
-        cout << "tanq" ;
-    }
-
 
         void processOrderQueue() {
         cout << "Processing orders from the queue:" << endl;
@@ -304,6 +293,25 @@ public:
         }
 
         cout << "All orders processed." << endl;
+    }
+
+    void checkout() {
+        processOrderQueue();
+
+        cout << "Thank you for your purchase. Your order details are:" << endl;
+        cout << "==============================================" << endl;
+        double sum = 0;
+        for (int i = 0; i < order_count; ++i) {
+            cout << i + 1 << ". " << order_queue[i].title << " by " << order_queue[i].author << " - $" << order_queue[i].price << endl;
+            sum += order_queue[i].price;
+        }
+        cout << "==============================================" << endl;
+        cout << "Total: $" << sum << endl;
+        cout << "Have a great day!" << endl;
+
+        orderFront = 0;
+        orderRear = 0;
+        order_count = 0;
     }
 
         void sortBooksByLatestAdded() {
@@ -326,7 +334,6 @@ public:
 int main()
 {
     OnlineBookstore onlineBookstore;
-//    onlineBookstore.addBook();
     int choice ;
     do
     {   cout << "press 1 to add new book to the bookstore " << endl;
@@ -335,10 +342,14 @@ int main()
         cout << "press 4 to check if the book is available " << endl;
         cout << "press 5 to view books under specified price " << endl;
         cout << "press 6 to add books to queue" << endl;
-        cin >> choice ;
+        cout << "press 7 to undo add books to queue" << endl;
+        cout << "press 0 to checkout" << endl;
 
+        cin >> choice ;
+         if (choice != 0) {
         switch (choice)
         {
+
         case 1:
             onlineBookstore.addBook();
             break;
@@ -400,18 +411,22 @@ int main()
             onlineBookstore.undoAddBook();
             break;
         }
+
+
         default :
-        {//add txt
+        {   if (choice != 0){
             cout <<"enter valid number " << endl;
             break;
             }
+        }
 
         }
-    }
+    } }
     while (choice!=0);
+
     onlineBookstore.checkout();
 
 
 
-    return 0;
+
 }
