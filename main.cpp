@@ -108,6 +108,8 @@ public:
         {
             Book newBook(title, author, genre, price, availability);
             book_list[book_count++] = newBook;
+            bookStack.push(newBook);  // Push the book onto the stack
+
         }
         else
         {
@@ -322,7 +324,9 @@ public:
     if (book_count > 0) {
         Book lastAdded = book_list[--book_count];
         cout << "Undoing addition of book: " << lastAdded.title << " by " << lastAdded.author << endl;
-        bookStack.pop(); // Pop the latest book from the stack
+        order_count--;
+
+
     } else {
         cout << "No books to undo." << endl;
     }
